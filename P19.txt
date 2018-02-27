@@ -1,0 +1,36 @@
+;P19
+
+
+
+.include "m328Pdef.inc"
+
+.def var_a = r16
+.def var_b = r17
+.def var_i= r18
+.def var_tem = r19
+
+
+.cseg
+.org 0x0000
+	rjmp reset
+	reset : 
+
+		ldi var_a, 15
+		ldi var_b, 1
+		ldi var_tem, 3
+
+WHILE: cp var_b,var_a
+       brlt LOOP
+	   rjmp END
+LOOP: 
+	   muls var_b,var_tem
+	   mov var_b,r0
+	   inc var_i
+	   rjmp WHILE
+	END : rjmp END
+	.dseg
+	.org 0x10c
+	pointerA: .byte 1
+	pointerB: .byte 1
+	pointerC: .byte 2
+	.eseg

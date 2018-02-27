@@ -1,0 +1,55 @@
+;Program 13
+
+
+.	;P13
+;unsigned char a, b;
+;unsigned short c;
+;if (a<=b)
+;     c = c+a;
+;else
+;    c = c+b;
+
+.include "m328Pdef.inc"
+
+.def var_a = r16
+.def var_b = r17
+.def var_cl = r18
+.def var_ch = r19
+.def TEMP = r20
+
+.cseg
+.org 0x0000
+	rjmp reset
+	reset : 
+
+	ldi XL,low(pointerA)
+	ldi XL,High(pointerA)
+	ld var_a,X+
+	ld var_b,X+
+	ld var_cl,X+
+	ld var_ch,X+
+
+	clr TEMP
+	cp var_b,var_a ;เปรียบเทียบ a  b
+	brsh TRUE
+	rjmp FALSE
+
+	TRUE: add var_cl,var_a
+			adc var_ch,TEMP
+			rjmp ENDIF
+
+	FALSE: add var_cl,var_b
+			adc var_ch,TEMP
+		
+	ENDIF: ldi XL,low(pointerC)
+			ldi XH,high(pointerC)
+			st X+,var_cl
+			st X+,var_ch
+	
+	end : rjmp END
+	.dseg
+	.org 0x10A
+	pointerA: .byte 1
+	pointerB: .byte 1
+	pointerC: .byte 2
+	.eseg

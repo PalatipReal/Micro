@@ -1,0 +1,33 @@
+;Program 09
+;unsigned char b= 220;
+ ;unsigned short a;
+; a = (b*15)+500;
+
+.include "m328Pdef.inc"
+
+.def var_al = r16
+.def var_ah = r17
+.def var_b = r18
+.def var_tem = r19
+.cseg
+.org 0x0000
+	rjmp reset
+
+	reset : ldi var_b,220 ;b=220
+			ldi var_tem,15 ; tem=15
+			ldi var_al,Low(500)  
+			ldi var_ah,High(500)
+
+			mul var_b,var_tem ; b*tem เก็บใน r0,r1
+			add var_al,R0 ; al+
+			adc var_ah,R1
+
+			
+
+					END: rjmp END
+			.dseg
+			.org 0x100
+			pointerI: .byte 1
+			pointerJ: .byte 1
+			pointerK: .byte 1
+			.eseg

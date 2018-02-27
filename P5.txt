@@ -1,0 +1,35 @@
+	;P5
+;unsigned char a, b=2, c=4;
+;a = b*c;
+
+
+.include "m328Pdef.inc"
+
+.def var_a = r16
+.def var_b = r17
+.def var_c = r18
+
+.cseg
+.org 0x0000
+	rjmp reset
+	reset : 
+
+	ldi var_b, 2
+	ldi var_c, 4
+	mov var_a,var_b
+	mul var_a,var_c
+	mov var_a,r0
+
+ldi xl,low(pointerA)
+ldi xh,High(pointerA)
+ st x+,var_a
+ st x+,var_b
+ st x+,var_c
+	
+	END : rjmp END
+	.dseg
+	.org 0x10c
+	pointerA: .byte 1
+	pointerB: .byte 1
+	pointerC: .byte 2
+	.eseg

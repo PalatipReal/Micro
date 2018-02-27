@@ -1,0 +1,30 @@
+;Program 01
+.include "m328Pdef.inc"
+
+.def var_i = r16
+.def var_j = r17
+.def var_k = r18
+
+.cseg
+.org 0x0000
+	rjmp reset
+	reset : ldi var_i,3
+			ldi var_j,12
+			ldi var_k,20
+			mov var_i,var_j
+			add var_i,var_k
+			inc var_k
+			mov var_j,var_k
+			subi var_j,5
+			ldi XL,low(pointerI)
+			ldi XH,High(pointerI)
+			st X+,var_i
+				st X+,var_j
+					st X+,var_k
+					END: rjmp END
+			.dseg
+			.org 0x100
+			pointerI: .byte 1
+			pointerJ: .byte 1
+			pointerK: .byte 1
+			.eseg

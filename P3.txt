@@ -1,0 +1,36 @@
+;Program 09
+;unsigned char b= 220;
+ ;unsigned short a;
+; a = (b*15)+500;
+
+.include "m328Pdef.inc"
+
+.def var_a = r16
+.def var_b = r17
+.def var_c = r18
+.def var_d = r19
+.def var_e = r20
+.def var_cl = r21
+.cseg
+.org 0x0000
+	rjmp reset
+
+	reset : ldi var_a,20
+	ldi var_b,32
+	ldi var_c,70
+	ldi var_d,3
+	mov var_cl,var_c
+	sub var_cl,var_d
+	mov var_c,var_a
+	add var_c,var_d
+	sub var_c,var_cl
+	mov var_e,var_c
+	subi var_e,10
+	inc var_b
+	mov var_d,var_c
+	add var_d,var_b
+	sub var_d,var_e
+	dec var_a
+	end : rjmp END
+	.dseg
+	.eseg
